@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -448,6 +448,11 @@
         document.getElementById('consultationForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
+            // Disable submit button to prevent double submission
+            const submitBtn = document.querySelector('.submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+            
             // Collect form data
             const formData = {
                 fullName: document.getElementById('fullName').value,
@@ -469,25 +474,27 @@
                 submittedAt: new Date().toISOString()
             };
 
-            // Store in memory (in a real implementation, this would be sent to a server)
-            console.log('Form submitted:', formData);
-            
-            // Show success message
-            document.querySelector('.form-content').style.display = 'none';
-            document.querySelector('.intro').style.display = 'none';
-            document.getElementById('successMessage').style.display = 'block';
-
-            // Download form data as JSON (for testing purposes)
-            const dataStr = JSON.stringify(formData, null, 2);
-            const dataBlob = new Blob([dataStr], {type: 'application/json'});
-            const url = URL.createObjectURL(dataBlob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `consultation_${formData.fullName.replace(/\s+/g, '_')}_${Date.now()}.json`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url);
+            // Send to Google Sheets
+            fetch('https://script.google.com/macros/s/AKfycbxHrFkbLVpuak-IZaNEc80QY9wj42y9AUfj6HYhNLS9i2hhBS9kqz8WfhgQu2A00GhMBA/exec', {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(() => {
+                // Show success message
+                document.querySelector('.form-content').style.display = 'none';
+                document.querySelector('.intro').style.display = 'none';
+                document.getElementById('successMessage').style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('There was an error submitting your form. Please try again or contact us directly at hello@virtuodesk.co.uk');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit Consultation Request';
+            });
         });
     </script>
 </body>
