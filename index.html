@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtuodesk - Career Transition Consultation Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #5a7c6f 0%, #4a6b5e 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #5a7c6f;
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .tagline {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+
+        .intro {
+            background: #f8f5f0;
+            padding: 25px 30px;
+            border-left: 4px solid #5a7c6f;
+            margin: 30px;
+            border-radius: 4px;
+        }
+
+        .form-content {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        .required {
+            color: #d9534f;
+            margin-left: 3px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 15px;
+            transition: border-color 0.3s;
+            font-family: inherit;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #5a7c6f;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .radio-group,
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .radio-option,
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .radio-option:hover,
+        .checkbox-option:hover {
+            border-color: #5a7c6f;
+            background: #f8f5f0;
+        }
+
+        .radio-option input[type="radio"],
+        .checkbox-option input[type="checkbox"] {
+            margin-right: 10px;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+
+        .consent-box {
+            background: #f8f5f0;
+            border: 2px solid #5a7c6f;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .consent-box h3 {
+            color: #5a7c6f;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .consent-option {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .consent-option input[type="checkbox"] {
+            margin-right: 10px;
+            margin-top: 3px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .consent-option label {
+            margin-bottom: 0;
+            font-weight: normal;
+            cursor: pointer;
+            line-height: 1.6;
+        }
+
+        .consent-details {
+            font-size: 13px;
+            color: #555;
+            margin-left: 30px;
+            line-height: 1.6;
+        }
+
+        .submit-btn {
+            background: #5a7c6f;
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #4a6b5e;
+        }
+
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .privacy-note {
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .success-message {
+            display: none;
+            background: #d4edda;
+            border: 2px solid #c3e6cb;
+            color: #155724;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px;
+            text-align: center;
+        }
+
+        .success-message h2 {
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .header {
+                padding: 30px 20px;
+            }
+
+            .form-content, .intro {
+                padding: 20px;
+                margin: 20px;
+            }
+
+            .logo {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">Virtuodesk</div>
+            <div class="tagline">Supporting your journey to better opportunities</div>
+            <h1>Career Transition Consultation Form</h1>
+        </div>
+
+        <div class="intro">
+            <strong>Welcome!</strong> We're excited to help you transition from care roles into supported housing positions. Please complete this form so we can understand your career goals and provide tailored support.
+        </div>
+
+        <div class="form-content">
+            <form id="consultationForm">
+                <!-- Personal Information -->
+                <div class="form-group">
+                    <label>Full Name <span class="required">*</span></label>
+                    <input type="text" id="fullName" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Email Address <span class="required">*</span></label>
+                    <input type="email" id="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Phone Number <span class="required">*</span></label>
+                    <input type="tel" id="phone" required>
+                </div>
+
+                <!-- Role Information -->
+                <div class="form-group">
+                    <label>What role are you looking to transition into? <span class="required">*</span></label>
+                    <select id="targetRole" required>
+                        <option value="">-- Select a role --</option>
+                        <option value="housing-support">Housing Support Officer</option>
+                        <option value="key-worker">Key Worker</option>
+                        <option value="tenancy-sustainment">Tenancy Sustainment Officer</option>
+                        <option value="community-outreach">Community & Outreach Support Worker</option>
+                        <option value="admin">Admin & Office-based position</option>
+                        <option value="other">Other (please specify below)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>What is your current role? <span class="required">*</span></label>
+                    <select id="currentRole" required>
+                        <option value="">-- Select your current role --</option>
+                        <option value="support-worker">Support Worker</option>
+                        <option value="healthcare-assistant">Healthcare Assistant</option>
+                        <option value="live-in-carer">Live-in Carer</option>
+                        <option value="care-assistant">Care Assistant</option>
+                        <option value="senior-support">Senior Support Worker</option>
+                        <option value="other">Other (please specify below)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>How many years of experience do you have in care/support work? <span class="required">*</span></label>
+                    <select id="experience" required>
+                        <option value="">-- Select experience level --</option>
+                        <option value="less-1">Less than 1 year</option>
+                        <option value="1-2">1-2 years</option>
+                        <option value="3-5">3-5 years</option>
+                        <option value="5plus">5+ years</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>How soon are you looking to start applying for new roles? <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="immediate" name="timeline" value="immediate" required>
+                            <label for="immediate">Immediately (within 2 weeks)</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="month" name="timeline" value="month">
+                            <label for="month">Within 1 month</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="2-3months" name="timeline" value="2-3months">
+                            <label for="2-3months">Within 2-3 months</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="exploring" name="timeline" value="exploring">
+                            <label for="exploring">Just exploring options</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Do you currently have an updated CV? <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="cv-ready" name="cvStatus" value="ready" required>
+                            <label for="cv-ready">Yes, it's ready to send</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="cv-needs-update" name="cvStatus" value="needs-update">
+                            <label for="cv-needs-update">Yes, but it needs updating</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="cv-need-help" name="cvStatus" value="need-help">
+                            <label for="cv-need-help">No, I need help creating one</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>What are your biggest challenges in making this career transition?</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="challenge1" value="understanding-roles">
+                            <label for="challenge1">Understanding what housing roles involve</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="challenge2" value="cv-tailoring">
+                            <label for="challenge2">Tailoring my CV for housing sector</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="challenge3" value="finding-opportunities">
+                            <label for="challenge3">Finding suitable job opportunities</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="challenge4" value="interview-prep">
+                            <label for="challenge4">Interview preparation</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="challenge5" value="qualifications">
+                            <label for="challenge5">Understanding required qualifications</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="challenge6" value="other">
+                            <label for="challenge6">Other (please specify below)</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Do you have any relevant qualifications or certifications?</label>
+                    <textarea id="qualifications" placeholder="Examples: NVQ Level 2/3 in Health & Social Care, First Aid, Safeguarding, etc."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>What's your preferred location for work?</label>
+                    <input type="text" id="location" placeholder="e.g., London, Manchester, Remote">
+                </div>
+
+                <div class="form-group">
+                    <label>Is there anything else you'd like us to know?</label>
+                    <textarea id="additionalInfo" placeholder="Any other information that might help us support you better..."></textarea>
+                </div>
+
+                <!-- GDPR Consent -->
+                <div class="consent-box">
+                    <h3>Data Protection & Privacy</h3>
+                    
+                    <div class="consent-option">
+                        <input type="checkbox" id="gdprConsent" required>
+                        <label for="gdprConsent">
+                            <strong>I consent to Virtuodesk collecting and storing my personal information provided in this form for the purpose of career consultation and job placement support.</strong> <span class="required">*</span>
+                        </label>
+                    </div>
+                    <div class="consent-details">
+                        I understand that:
+                        <ul style="margin-top: 8px; margin-left: 20px;">
+                            <li>My data will be stored securely and used only for providing jobseeker support services</li>
+                            <li>I can request to view, update, or delete my data at any time by contacting hello@virtuodesk.co.uk</li>
+                            <li>My data will not be shared with third parties without my explicit consent</li>
+                            <li>I have read and agree to Virtuodesk's Privacy Policy</li>
+                        </ul>
+                    </div>
+
+                    <div class="consent-option" style="margin-top: 20px;">
+                        <input type="checkbox" id="marketingConsent">
+                        <label for="marketingConsent">
+                            I would like to receive updates about job opportunities and career tips from Virtuodesk (optional - you can unsubscribe anytime)
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">Submit Consultation Request</button>
+
+                <div class="privacy-note">
+                    Your privacy matters to us. For full details on how we handle your data, please see our Privacy Policy at www.virtuodesk.co.uk/privacy
+                </div>
+            </form>
+        </div>
+
+        <div class="success-message" id="successMessage">
+            <h2>✓ Thank You!</h2>
+            <p>Your consultation request has been submitted successfully.</p>
+            <p>We'll review your information and get back to you within 24-48 hours.</p>
+            <p style="margin-top: 15px;"><strong>Contact us:</strong> hello@virtuodesk.co.uk | 07926 124909</p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('consultationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Collect form data
+            const formData = {
+                fullName: document.getElementById('fullName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                targetRole: document.getElementById('targetRole').value,
+                currentRole: document.getElementById('currentRole').value,
+                experience: document.getElementById('experience').value,
+                timeline: document.querySelector('input[name="timeline"]:checked').value,
+                cvStatus: document.querySelector('input[name="cvStatus"]:checked').value,
+                challenges: Array.from(document.querySelectorAll('input[type="checkbox"]:checked'))
+                    .filter(cb => cb.id.startsWith('challenge'))
+                    .map(cb => cb.value),
+                qualifications: document.getElementById('qualifications').value,
+                location: document.getElementById('location').value,
+                additionalInfo: document.getElementById('additionalInfo').value,
+                gdprConsent: document.getElementById('gdprConsent').checked,
+                marketingConsent: document.getElementById('marketingConsent').checked,
+                submittedAt: new Date().toISOString()
+            };
+
+            // Store in memory (in a real implementation, this would be sent to a server)
+            console.log('Form submitted:', formData);
+            
+            // Show success message
+            document.querySelector('.form-content').style.display = 'none';
+            document.querySelector('.intro').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'block';
+
+            // Download form data as JSON (for testing purposes)
+            const dataStr = JSON.stringify(formData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `consultation_${formData.fullName.replace(/\s+/g, '_')}_${Date.now()}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        });
+    </script>
+</body>
+</html>
